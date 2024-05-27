@@ -23,6 +23,12 @@ body {
     cursor: none;
 }
 
+a {
+    color: inherit;
+    text-decoration: inherit;
+    cursor: none;
+}
+
 html {
     font-size: 16px;
     overscroll-behavior: none;

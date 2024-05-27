@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./overlay.module.css";
 import Image from "next/image";
 
@@ -13,13 +14,17 @@ export default function Overlay() {
         ></Image>
       </div>
       <div style={{ placeSelf: "start end" }}>
-        <span className={styles.shadow}>About Us</span>
+        <Link href={"/about-us"} className={styles.shadow}>
+          About Us
+        </Link>
       </div>
       <div style={{ placeSelf: "end start" }}>
         <span className={styles.shadow}>Back To Top</span>
       </div>
       <div style={{ placeSelf: "end end" }}>
-        <span className={styles.shadow}>About Us</span>
+        <Link href={"/about-us"} className={styles.shadow}>
+          About Us
+        </Link>
       </div>
     </div>
   );

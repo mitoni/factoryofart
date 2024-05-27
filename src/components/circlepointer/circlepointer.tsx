@@ -73,6 +73,7 @@ function _CirclePointer() {
           zIndex: 99,
           background: "var(--diff)",
           mixBlendMode: "difference",
+          pointerEvents: "none",
         }}
       />
     </div>

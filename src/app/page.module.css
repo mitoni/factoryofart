@@ -1,6 +1,6 @@
 .section {
     max-width: 1920px;
-    margin: 0 auto;
+    margin: 0 auto 8rem;
     padding: min(5%, 50px);
     min-height: 100vh;
 }
