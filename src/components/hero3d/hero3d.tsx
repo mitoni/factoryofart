@@ -104,10 +104,10 @@ const Image3D = React.forwardRef(function Image(
             ref={title}
             font={font}
             fontSize={BASE_FONT_SIZE * 0.5}
-            color={textColor}
             //fillOpacity={0}
           >
             {project.title}
+            <meshBasicMaterial toneMapped={false} color={textColor} />
           </Text>
           <Text
             anchorX={anchorX}
@@ -120,6 +120,7 @@ const Image3D = React.forwardRef(function Image(
             //fillOpacity={0}
           >
             {project.description}
+            <meshBasicMaterial toneMapped={false} color={textColor} />
           </Text>
         </group>
       </group>
