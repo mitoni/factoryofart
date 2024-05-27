@@ -75,16 +75,14 @@ const Image3D = React.forwardRef(function Image(
   return (
     <group position={position}>
       <group ref={gref}>
-        <Float speed={2}>
-          <_Image
-            ref={iref}
-            scale={scale}
-            {...args}
-            transparent={true}
-            onPointerEnter={() => (hover.current = true)}
-            onPointerLeave={() => (hover.current = false)}
-          ></_Image>
-        </Float>
+        <_Image
+          ref={iref}
+          scale={scale}
+          {...args}
+          transparent={true}
+          onPointerEnter={() => (hover.current = true)}
+          onPointerLeave={() => (hover.current = false)}
+        ></_Image>
         <group
           position={
             pos == "right" ? [0.75 * s[0]!, 0, 0] : [-0.75 * s[0]!, 0, 0]
@@ -165,16 +163,14 @@ const Images = React.forwardRef(function Images(
   });
 
   const dx = isMobile ? 1 : 6;
-  const deltaX = 2;
   const dy = isMobile ? 3 : 3;
-  const deltaY = 1;
   const space = isMobile ? SPACE * 2 : SPACE;
 
   const pts = [
     new Vector3(-dx, -dy, 0),
     new Vector3(dx, -dy, 0),
     new Vector3(-dx, dy, 0),
-    new Vector3(dx, -dy, 0),
+    new Vector3(dx, dy, 0),
   ];
 
   return (
@@ -183,13 +179,7 @@ const Images = React.forwardRef(function Images(
         const { width, height } = project.image;
         const p = i % 4;
         const position = pts[p].clone();
-        position.add(
-          new Vector3(
-            0 /* deltaX * (Math.random() - 1) */,
-            deltaY * (Math.random() - 1),
-            0
-          )
-        );
+
         position.setZ(-i * space);
         return (
           <Image3D
@@ -252,8 +242,8 @@ export default function Hero3D() {
           <Canvas gl={{ antialias: false }}>
             <PerspectiveCamera
               makeDefault
-              fov={55}
-              position={[0, 0, SPACE * 3]}
+              fov={35}
+              position={[0, 0, SPACE * 5]}
             />
             {/*<CameraControls />*/}
             <Suspense fallback={null}>
