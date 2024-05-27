@@ -44,7 +44,7 @@ export default function Animation() {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "#f6dd34",
+        backgroundColor: "var(--yellow)",
         opacity: 1,
         zIndex: 999,
       }}

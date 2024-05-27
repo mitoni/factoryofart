@@ -9,6 +9,7 @@ import {
   Text,
   PerspectiveCamera,
   ImageProps,
+  Float,
 } from "@react-three/drei";
 import { ComponentProps, Suspense } from "react";
 import { Group, Mesh, Vector3 } from "three";
@@ -68,25 +69,25 @@ const Image3D = React.forwardRef(function Image(
 
   const pos = dataKey % 2 == 0 ? "left" : "right";
   const s = Array.isArray(scale) ? scale : [scale];
-  const anchorX = pos == "right" ? "right" : "left";
-  const textAlign = pos == "right" ? "right" : "left";
+  const anchorX = pos == "right" ? "left" : "right";
+  const textAlign = pos == "right" ? "left" : "right";
 
   return (
     <group position={position}>
       <group ref={gref}>
-        <_Image
-          ref={iref}
-          scale={scale}
-          {...args}
-          transparent={true}
-          onPointerEnter={() => (hover.current = true)}
-          onPointerLeave={() => (hover.current = false)}
-        ></_Image>
+        <Float speed={2}>
+          <_Image
+            ref={iref}
+            scale={scale}
+            {...args}
+            transparent={true}
+            onPointerEnter={() => (hover.current = true)}
+            onPointerLeave={() => (hover.current = false)}
+          ></_Image>
+        </Float>
         <group
           position={
-            pos == "right"
-              ? [-0.75 * s[0]!, -0.25 * s[1]!, 0]
-              : [0.75 * s[0]!, 0.25 * s[1]!, 0]
+            pos == "right" ? [0.75 * s[0]!, 0, 0] : [-0.75 * s[0]!, 0, 0]
           }
         >
           <Text
@@ -96,6 +97,7 @@ const Image3D = React.forwardRef(function Image(
             ref={title}
             font={font}
             fontSize={BASE_FONT_SIZE * 0.5}
+            color={"#1A1A1A"}
             //fillOpacity={0}
           >
             {project.title}
@@ -107,6 +109,7 @@ const Image3D = React.forwardRef(function Image(
             ref={description}
             font={font}
             fontSize={BASE_FONT_SIZE * 0.25}
+            color={"#1A1A1A"}
             //fillOpacity={0}
           >
             {project.description}
@@ -122,6 +125,7 @@ const Images = React.forwardRef(function Images(
   ref: React.ForwardedRef<any>
 ) {
   const scrolled = React.useRef(0);
+  const triggered = React.useRef(false);
   const isMobile = window.innerWidth < 780;
 
   React.useImperativeHandle(ref, () => {
@@ -132,21 +136,35 @@ const Images = React.forwardRef(function Images(
     };
   });
 
+  React.useEffect(() => {
+    function handleScroll() {
+      triggered.current = true;
+      window.removeEventListener("scroll", handleScroll);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const group = React.useRef<Group>(null!);
   const img = React.useRef<any>(null);
 
   useFrame((_, delta) => {
-    const target = new Vector3(
-      0,
-      0,
-      scrolled.current *
-        (projects?.length + 2 || 0) /* compensate for initial camera offset */ *
-        SPACE
-    );
+    const target = triggered.current
+      ? new Vector3(
+          0,
+          0,
+          scrolled.current *
+            (projects?.length + 2 ||
+              0) /* compensate for initial camera offset */ *
+            SPACE
+        )
+      : group.current.position.clone().add(new Vector3(0, 0, 0.1));
+
     damp3(group.current.position, target, 0.25, delta);
   });
 
-  const dx = isMobile ? 1 : 4;
+  const dx = isMobile ? 1 : 6;
   const deltaX = 2;
   const dy = isMobile ? 3 : 3;
   const deltaY = 1;
@@ -167,7 +185,7 @@ const Images = React.forwardRef(function Images(
         const position = pts[p].clone();
         position.add(
           new Vector3(
-            deltaX * (Math.random() - 1),
+            0 /* deltaX * (Math.random() - 1) */,
             deltaY * (Math.random() - 1),
             0
           )

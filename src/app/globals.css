@@ -1,7 +1,9 @@
 @import url("https://use.typekit.net/vti3bpo.css");
 
 :root {
-    --yellow: #f6dd34;
+    --yellow: #FFDE00;
+    --blue: #1F1ABF;
+    --black: #1A1A1A;
     --font: alternate-gothic-atf;
 }
 
@@ -15,7 +17,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(#1F1ABF, #17138E);
+    background: var(--blue);
     font-family: var(--font);
 }
 
