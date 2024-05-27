@@ -1,5 +1,6 @@
 import { CirclePointer } from "@/components/circlepointer/circlepointer";
 import "./globals.css";
+import Overlay from "@/components/overlay/overlay";
 
 export const metadata = {
   title: "F.ART - WE CREATE WORLDS",
@@ -40,6 +41,7 @@ export default function RootLayout({
 
       <body>
         <CirclePointer />
+        <Overlay />
         {children}
       </body>
     </html>

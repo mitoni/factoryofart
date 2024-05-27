@@ -1,0 +1,20 @@
+.container {
+    position: fixed;
+    inset: 0;
+
+    padding: 3rem;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+
+    color: var(--yellow);
+    font-size: 3rem;
+    font-weight: 600;
+
+    z-index: 98;
+}
+
+.shadow {
+    filter: drop-shadow(0 0 2rem #1F1ABF);
+}

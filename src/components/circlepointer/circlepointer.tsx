@@ -71,7 +71,7 @@ function _CirclePointer() {
           borderRadius: 99,
           transform: "translate(-50%, -50%)",
           zIndex: 99,
-          background: "white",
+          background: "var(--diff)",
           mixBlendMode: "difference",
         }}
       />
