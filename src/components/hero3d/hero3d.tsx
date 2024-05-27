@@ -135,6 +135,7 @@ const Images = React.forwardRef(function Images(
   const scrolled = React.useRef(0);
   const triggered = React.useRef(false);
   const isMobile = window.innerWidth < 780;
+  const ratio = window.innerHeight / window.innerWidth;
 
   React.useImperativeHandle(ref, () => {
     return {
@@ -173,7 +174,7 @@ const Images = React.forwardRef(function Images(
   });
 
   const dx = isMobile ? 1 : 6;
-  const dy = isMobile ? 3 : 3;
+  const dy = dx * ratio;
   const space = isMobile ? SPACE * 2 : SPACE;
 
   const pts = [
