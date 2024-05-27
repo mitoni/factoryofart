@@ -43,7 +43,7 @@ const projects: TProject[] = [
     image: mv,
   },
   {
-    title: "AMORE IN UN LAMPO (ANDREA CALZI)",
+    title: "AMORE IN UN LAMPO",
     description: "PORTRAIT/GRAPHIC DESIGN",
     image: ac,
   },

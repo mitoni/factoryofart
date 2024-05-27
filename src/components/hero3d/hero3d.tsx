@@ -10,9 +10,17 @@ import {
   PerspectiveCamera,
   ImageProps,
   Float,
+  Loader,
 } from "@react-three/drei";
 import { ComponentProps, Suspense } from "react";
-import { Group, Mesh, Vector3 } from "three";
+import {
+  AdditiveBlending,
+  Group,
+  Material,
+  Mesh,
+  SubtractiveBlending,
+  Vector3,
+} from "three";
 import { clamp } from "three/src/math/MathUtils.js";
 import { damp3, damp } from "maath/easing";
 import { remap } from "maath/misc";
@@ -51,7 +59,7 @@ const Image3D = React.forwardRef(function Image(
   });
 
   const cpos = three.camera.position;
-  const range = [0, 10];
+  const range = [0, 30];
 
   useFrame((_, delta) => {
     let ipos = new Vector3();
@@ -71,6 +79,7 @@ const Image3D = React.forwardRef(function Image(
   const s = Array.isArray(scale) ? scale : [scale];
   const anchorX = pos == "right" ? "left" : "right";
   const textAlign = pos == "right" ? "left" : "right";
+  const textColor = "white";
 
   return (
     <group position={position}>
@@ -95,7 +104,7 @@ const Image3D = React.forwardRef(function Image(
             ref={title}
             font={font}
             fontSize={BASE_FONT_SIZE * 0.5}
-            color={"#1A1A1A"}
+            color={textColor}
             //fillOpacity={0}
           >
             {project.title}
@@ -107,7 +116,7 @@ const Image3D = React.forwardRef(function Image(
             ref={description}
             font={font}
             fontSize={BASE_FONT_SIZE * 0.25}
-            color={"#1A1A1A"}
+            color={textColor}
             //fillOpacity={0}
           >
             {project.description}
