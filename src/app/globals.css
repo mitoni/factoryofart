@@ -19,8 +19,12 @@ body {
     margin: 0;
     padding: 0;
     background: var(--blue);
-    font-family: var(--font);
     cursor: none;
+    color: var(--yellow);
+    font-family: var(--font);
+    font-size: 3rem;
+    font-weight: 600;
+    min-height: 100vh;
 }
 
 a {
@@ -32,6 +36,7 @@ a {
 html {
     font-size: 16px;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
 }
 
 @media (max-width: 780px) {

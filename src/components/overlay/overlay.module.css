@@ -13,8 +13,14 @@
     font-weight: 600;
 
     z-index: 98;
+
+    pointer-events: none;
 }
 
 .shadow {
     filter: drop-shadow(0 0 2rem #1F1ABF);
+}
+
+.catcher {
+    pointer-events: auto;
 }

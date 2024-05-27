@@ -1,6 +1,6 @@
 .section {
     max-width: 1920px;
-    margin: 0 auto 8rem;
+    margin: 0 auto;
     padding: min(5%, 50px);
     min-height: 100vh;
 }
@@ -10,9 +10,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-flow: row;
-    color: var(--yellow);
-    font-size: 3rem;
-    font-weight: 600;
     gap: 1rem;
 }
 

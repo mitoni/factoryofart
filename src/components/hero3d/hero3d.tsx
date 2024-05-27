@@ -228,44 +228,42 @@ export default function Hero3D() {
   }, []);
 
   return (
-    <>
-      <div style={{ height: "500vh" }}>
-        <div ref={ref} style={{ height: "100vh", position: "sticky", top: 0 }}>
-          <div
+    <div id="hero3d" style={{ height: "500vh" }}>
+      <div ref={ref} style={{ height: "100vh", position: "sticky", top: 0 }}>
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+          }}
+        >
+          <img
+            src={bg.src}
+            alt="fart logo"
             style={{
+              width: "100%",
               position: "absolute",
-              inset: 0,
+              bottom: 0,
+              padding: "0 min(5%, 50px)",
+              boxSizing: "border-box",
+              transform: "translateY(11%)",
             }}
-          >
-            <img
-              src={bg.src}
-              alt="fart logo"
-              style={{
-                width: "100%",
-                position: "absolute",
-                bottom: 0,
-                padding: "0 min(5%, 50px)",
-                boxSizing: "border-box",
-                transform: "translateY(11%)",
-              }}
-            />
-          </div>
-          <Canvas gl={{ antialias: false }}>
-            <PerspectiveCamera
-              makeDefault
-              fov={35}
-              position={[0, 0, SPACE * 5]}
-            />
-            {/*<CameraControls />*/}
-            <Suspense fallback={null}>
-              <Images ref={imgs} />
-            </Suspense>
-          </Canvas>
-          {
-            // <Stats />
-          }
+          />
         </div>
+        <Canvas gl={{ antialias: false }}>
+          <PerspectiveCamera
+            makeDefault
+            fov={35}
+            position={[0, 0, SPACE * 5]}
+          />
+          {/*<CameraControls />*/}
+          <Suspense fallback={null}>
+            <Images ref={imgs} />
+          </Suspense>
+        </Canvas>
+        {
+          // <Stats />
+        }
       </div>
-    </>
+    </div>
   );
 }

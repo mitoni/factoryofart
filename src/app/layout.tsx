@@ -1,5 +1,5 @@
-import { CirclePointer } from "@/components/circlepointer/circlepointer";
 import "./globals.css";
+import { CirclePointer } from "@/components/circlepointer/circlepointer";
 import Overlay from "@/components/overlay/overlay";
 
 export const metadata = {

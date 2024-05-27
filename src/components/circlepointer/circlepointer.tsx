@@ -3,10 +3,10 @@
 import React from "react";
 import { memo } from "react";
 
-function findTagInParents(el: Element | null, attr: string): boolean {
+function findTagInParents(el: Element | null, ...attrs: string[]): boolean {
   function recurse(el: Element | null) {
     if (el == null) return false;
-    if (el.getAttribute(attr)) return true;
+    if (attrs.some((attr) => !!el.getAttribute(attr))) return true;
     if (!el.parentElement) return false;
     return recurse(el.parentElement);
   }
@@ -23,7 +23,7 @@ function _CirclePointer() {
       cursor.current.style.top = `${y}px`;
 
       const hover = document.elementFromPoint(x, y);
-      const isLink = findTagInParents(hover, "href");
+      const isLink = findTagInParents(hover, "href", "data-link");
       if (isLink) {
         cursor.current.style.width = "2rem";
         cursor.current.style.height = "2rem";
