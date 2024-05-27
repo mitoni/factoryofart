@@ -261,7 +261,9 @@ export default function Hero3D() {
               <Images ref={imgs} />
             </Suspense>
           </Canvas>
-          <Stats />
+          {
+            // <Stats />
+          }
         </div>
       </div>
     </>

@@ -78,14 +78,14 @@ const projects: TProject[] = [
     image: gesa,
   },
   {
-    title: "COMMERCIAL",
-    description: "PHOTOGRAPHY/VIDEO/ADV CAMPAIGN",
-    image: commercial,
-  },
-  {
     title: "INO FIRENZE",
     description: "PORTRAIT/ STILL LIFE PHOTOGRAPHY/ADV CAMPAIGN",
     image: ino,
+  },
+  {
+    title: "COMMERCIAL",
+    description: "PHOTOGRAPHY/VIDEO/ADV CAMPAIGN",
+    image: commercial,
   },
 ];
 

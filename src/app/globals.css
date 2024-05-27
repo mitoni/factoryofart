@@ -19,6 +19,7 @@ body {
     padding: 0;
     background: var(--blue);
     font-family: var(--font);
+    cursor: none;
 }
 
 html {

@@ -1,3 +1,4 @@
+import { CirclePointer } from "@/components/circlepointer/circlepointer";
 import "./globals.css";
 
 export const metadata = {
@@ -37,7 +38,10 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
 
-      <body>{children}</body>
+      <body>
+        <CirclePointer />
+        {children}
+      </body>
     </html>
   );
 }
