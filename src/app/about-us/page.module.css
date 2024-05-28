@@ -1,0 +1,43 @@
+.main {
+    background: var(--yellow);
+
+    padding: 12rem min(5%, 50px) 0;
+    min-height: 100vh;
+
+    color: var(--blue);
+    min-height: 100vh;
+}
+
+.grid {
+    margin: 0 auto;
+    max-width: var(--max-width);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content;
+    grid-auto-flow: row;
+    gap: 1rem;
+}
+
+.left {
+    grid-column: 1 / 2;
+}
+
+.right {
+    grid-column: 2 / 3;
+}
+
+.center {
+    grid-column: 1 / 3;
+}
+
+@media (max-width: 780px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .left,
+    .right,
+    .center {
+        grid-column: 1 / 2;
+    }
+}

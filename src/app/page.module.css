@@ -1,5 +1,13 @@
+.main {
+    background: var(--blue);
+    color: var(--yellow);
+    font-size: 1.5rem;
+    font-weight: 600;
+    min-height: 100vh;
+}
+
 .section {
-    max-width: 1920px;
+    max-width: var(--max-width);
     margin: 0 auto;
     padding: min(5%, 50px);
     min-height: 100vh;

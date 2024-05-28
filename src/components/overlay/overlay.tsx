@@ -15,6 +15,7 @@ export default function Overlay() {
           ></Image>
         </Link>
       </div>
+
       <div style={{ placeSelf: "start end" }}>
         <Link
           href={"/about-us"}
@@ -23,11 +24,13 @@ export default function Overlay() {
           About Us
         </Link>
       </div>
+
       <div style={{ placeSelf: "end start" }}>
         {
           // <span className={styles.shadow}>Back To Top</span>
         }
       </div>
+
       <div style={{ placeSelf: "end end" }}>
         {
           //  <Link href={"/about-us"} className={styles.shadow}>

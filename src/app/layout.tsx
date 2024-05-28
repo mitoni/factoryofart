@@ -41,7 +41,6 @@ export default function RootLayout({
 
       <body>
         <CirclePointer />
-        <Overlay />
         {children}
       </body>
     </html>

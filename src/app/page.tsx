@@ -1,22 +1,22 @@
-import { motion } from "framer-motion";
 import styles from "./page.module.css";
 import Hero3D from "@/components/hero3d/hero3d";
 import Animation from "@/components/animation/animation";
 import Footer from "@/components/footer/footer";
+import Overlay from "@/components/overlay/overlay";
 
 export default async function Home() {
   return (
-    <main>
+    <main className={styles.main}>
       <Animation />
       <Hero3D />
+      <Overlay />
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.t1}>
             <p>Multidisciplinary studio based in Milan.</p>
             <p>
-              Art, Design, Film, Photography,
-              <br />
-              Cross-media Communication, and beyond.
+              Art, Design, Film, Photography, Cross-media Communication, and
+              beyond.
               <br /> Above all, we believe in DREAMS.
             </p>
           </div>
