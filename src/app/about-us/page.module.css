@@ -30,6 +30,27 @@
     grid-column: 1 / 3;
 }
 
+.banner {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    height: 16rem;
+}
+
+.overlay {
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--blue);
+        mix-blend-mode: exclusion;
+    }
+}
+
+
 @media (max-width: 780px) {
     .grid {
         grid-template-columns: 1fr;

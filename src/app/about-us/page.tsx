@@ -6,6 +6,42 @@ export default function Page() {
   return (
     <main className={styles.main}>
       <section className={styles.grid}>
+        <div className={styles.banner}>
+          <div
+            className={styles.overlay}
+            style={{ gridColumn: "1 / span 1", gridRow: "1 / -1" }}
+          >
+            <Image
+              fill
+              src={"/monica-silva-portrait.jpg"}
+              alt="monica silva portrait"
+              style={{ objectFit: "cover", objectPosition: "center center" }}
+            ></Image>
+          </div>
+          <div style={{ gridColumn: "2 / span 1", gridRow: "1 / -1" }} />
+          <div style={{ gridColumn: "3 / span 1", gridRow: "1 / -1" }} />
+          <div
+            className={styles.overlay}
+            style={{ gridColumn: "4 / span 1", gridRow: "1 / -1" }}
+          >
+            <Image
+              fill
+              src={"/valerio-fausti-portrait.jpg"}
+              alt="monica silva portrait"
+              style={{ objectFit: "cover", objectPosition: "center center" }}
+            ></Image>
+          </div>
+          <div
+            style={{
+              gridColumn: "1 / -1",
+              gridRow: "1 / -1",
+              position: "relative",
+            }}
+          >
+            <Image fill src={"/description.svg"} alt="description"></Image>
+          </div>
+        </div>
+
         <div className={styles.center} style={{ textAlign: "center" }}>
           <h2>EVERYTHING WE DO IS HANDLED AS ART</h2>
         </div>
