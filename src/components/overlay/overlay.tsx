@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import styles from "./overlay.module.css";
-import Image from "next/image";
 import React from "react";
 import Logo from "@/data/svgs/logo";
 

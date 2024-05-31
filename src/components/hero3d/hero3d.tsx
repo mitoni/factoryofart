@@ -4,25 +4,15 @@ import React from "react";
 import bg from "./fart-bg.svg";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
-  Stats,
   Image as _Image,
   Text,
   PerspectiveCamera,
   ImageProps,
-  Float,
-  Loader,
 } from "@react-three/drei";
 import { ComponentProps, Suspense } from "react";
-import {
-  AdditiveBlending,
-  Group,
-  Material,
-  Mesh,
-  SubtractiveBlending,
-  Vector3,
-} from "three";
+import { Group, Mesh, Vector3 } from "three";
 import { clamp } from "three/src/math/MathUtils.js";
-import { damp3, damp } from "maath/easing";
+import { damp3 } from "maath/easing";
 import { remap } from "maath/misc";
 
 import projects, { TProject } from "@/data/projects";
@@ -40,14 +30,43 @@ const Image3D = React.forwardRef(function Image(
   const iref = React.useRef<any>(null!);
   const title = React.useRef<any>(null!);
   const gref = React.useRef<Group>(null!);
+  const text = React.useRef<Group>(null!);
   const description = React.useRef<any>(null!);
   const hover = React.useRef(false);
   const three = useThree();
 
   const font = "/fonts/aga.woff";
 
+  const pos = dataKey % 2 == 0 ? "left" : "right";
+  const s = Array.isArray(scale) ? scale : [scale];
+  const anchorX = pos == "right" ? "left" : "right";
+  const textAlign = pos == "right" ? "left" : "right";
+  const textColor = "white";
+
+  const sx = Array.isArray(scale) ? scale?.[0] ?? 1 : 1;
+  const sy = Array.isArray(scale) ? scale?.[1] ?? 1 : 1;
+  const sm = 2.5;
+
   useFrame((_, delta) => {
-    damp(iref.current, "zoom", hover.current ? 2 : 1, 0.25, delta);
+    damp3(
+      iref.current.scale,
+      hover.current ? [sx * sm, sy * sm, 1] : [sx, sy, 1],
+      0.25,
+      delta
+    );
+
+    damp3(
+      text.current.position,
+      hover.current
+        ? pos == "right"
+          ? [1.5 * s[0]!, 0, 1]
+          : [-1.5 * s[0]!, 0, 1]
+        : pos == "right"
+        ? [0.75 * s[0]!, 0, 1]
+        : [-0.75 * s[0]!, 0, 1],
+      0.25,
+      delta
+    );
     // damp(title.current, "fillOpacity", hover.current ? 1 : 0, 0.25, delta);
     // damp(
     //   description.current,
@@ -75,12 +94,6 @@ const Image3D = React.forwardRef(function Image(
     );
   });
 
-  const pos = dataKey % 2 == 0 ? "left" : "right";
-  const s = Array.isArray(scale) ? scale : [scale];
-  const anchorX = pos == "right" ? "left" : "right";
-  const textAlign = pos == "right" ? "left" : "right";
-  const textColor = "white";
-
   return (
     <group position={position}>
       <group ref={gref}>
@@ -93,8 +106,9 @@ const Image3D = React.forwardRef(function Image(
           onPointerLeave={() => (hover.current = false)}
         ></_Image>
         <group
+          ref={text}
           position={
-            pos == "right" ? [0.75 * s[0]!, 0, 0] : [-0.75 * s[0]!, 0, 0]
+            pos == "right" ? [0.75 * s[0]!, 0, 1] : [-0.75 * s[0]!, 0, 1]
           }
         >
           <Text
@@ -104,7 +118,7 @@ const Image3D = React.forwardRef(function Image(
             ref={title}
             font={font}
             fontSize={BASE_FONT_SIZE * 0.5}
-            //fillOpacity={0}
+            fillOpacity={1}
           >
             {project.title}
             <meshBasicMaterial toneMapped={false} color={textColor} />
@@ -117,7 +131,7 @@ const Image3D = React.forwardRef(function Image(
             font={font}
             fontSize={BASE_FONT_SIZE * 0.25}
             color={textColor}
-            //fillOpacity={0}
+            fillOpacity={1}
           >
             {project.description}
             <meshBasicMaterial toneMapped={false} color={textColor} />
