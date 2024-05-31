@@ -1,10 +1,12 @@
 import Footer from "@/components/footer/footer";
 import styles from "./page.module.css";
 import Image from "next/image";
+import Overlay from "@/components/overlay/overlay";
 
 export default function Page() {
   return (
     <main className={styles.main}>
+      <Overlay />
       <section className={styles.grid}>
         <div className={styles.banner}>
           <div
@@ -13,6 +15,7 @@ export default function Page() {
           >
             <Image
               fill
+              sizes="800"
               src={"/monica-silva-portrait.jpg"}
               alt="monica silva portrait"
               style={{ objectFit: "cover", objectPosition: "center center" }}
@@ -26,6 +29,7 @@ export default function Page() {
           >
             <Image
               fill
+              sizes="800"
               src={"/valerio-fausti-portrait.jpg"}
               alt="monica silva portrait"
               style={{ objectFit: "cover", objectPosition: "center center" }}
