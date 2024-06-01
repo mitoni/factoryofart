@@ -28,6 +28,9 @@ const Image3D = React.forwardRef(function Image(
   _: React.ForwardedRef<ImageProps & Mesh>
 ) {
   const { position, "data-key": dataKey, scale, project, ...args } = props;
+
+  const isMobile = window.innerWidth < 780;
+
   const iref = React.useRef<any>(null!);
   const title = React.useRef<any>(null!);
   const gref = React.useRef<Group>(null!);
@@ -38,7 +41,7 @@ const Image3D = React.forwardRef(function Image(
 
   const font = "/fonts/aga.woff";
 
-  const pos = dataKey % 2 == 0 ? "left" : "right";
+  const pos = isMobile ? "right" : dataKey % 2 == 0 ? "left" : "right";
   const s = Array.isArray(scale) ? scale : [scale];
   const anchorX = pos == "right" ? "left" : "right";
   const textAlign = pos == "right" ? "left" : "right";
@@ -49,6 +52,8 @@ const Image3D = React.forwardRef(function Image(
   const sm = 2.5;
 
   useFrame((_, delta) => {
+    if (isMobile) return;
+
     damp3(
       iref.current.scale,
       hover.current ? [sx * sm, sy * sm, 1] : [sx, sy, 1],
@@ -109,7 +114,13 @@ const Image3D = React.forwardRef(function Image(
         <group
           ref={text}
           position={
-            pos == "right" ? [0.75 * s[0]!, 0, 1] : [-0.75 * s[0]!, 0, 1]
+            isMobile
+              ? dataKey % 2 == 0
+                ? [0, -0.75 * s[1]!, 0]
+                : [0, 0.75 * s[1]!, 0]
+              : pos == "right"
+              ? [0.75 * s[0]!, 0, 1]
+              : [-0.75 * s[0]!, 0, 1]
           }
         >
           <Text
@@ -179,25 +190,32 @@ const Images = React.forwardRef(function Images(
           0,
           0,
           scrolled.current *
-            (projects?.length + 2 ||
-              0) /* compensate for initial camera offset */ *
-            SPACE
+            projects?.length *
+            SPACE *
+            (isMobile ? 2 : 1) /* compensation */
         )
       : group.current.position.clone().add(new Vector3(0, 0, 0.1));
 
     damp3(group.current.position, target, 0.25, delta);
   });
 
-  const dx = isMobile ? 1 : 6;
-  const dy = dx * ratio;
+  const dx = 6;
+  const dy = isMobile ? 2 : dx * ratio;
   const space = isMobile ? SPACE * 2 : SPACE;
 
-  const pts = [
-    new Vector3(-dx, -dy, 0),
-    new Vector3(dx, -dy, 0),
-    new Vector3(-dx, dy, 0),
-    new Vector3(dx, dy, 0),
-  ];
+  const pts = isMobile
+    ? [
+        new Vector3(-1, -dy, 0),
+        new Vector3(-1, dy, 0),
+        new Vector3(-1, -dy, 0),
+        new Vector3(-1, dy, 0),
+      ]
+    : [
+        new Vector3(-dx, -dy, 0),
+        new Vector3(dx, -dy, 0),
+        new Vector3(-dx, dy, 0),
+        new Vector3(dx, dy, 0),
+      ];
 
   return (
     <group ref={group}>
@@ -207,6 +225,7 @@ const Images = React.forwardRef(function Images(
         const position = pts[p].clone();
 
         position.setZ(-i * space);
+
         return (
           <Image3D
             key={i}
@@ -231,7 +250,7 @@ export default function Hero3D() {
     function handleScroll() {
       const rh = ref.current!.parentElement!.offsetHeight;
       const { top: ot } = ref.current!.parentElement!.getBoundingClientRect();
-      const clamped = clamp(-ot / rh, 0, 1);
+      const clamped = clamp(-ot / (rh - window.innerHeight), 0, Infinity);
 
       imgs.current?.move(clamped);
     }

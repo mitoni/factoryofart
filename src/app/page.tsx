@@ -41,8 +41,8 @@ export default async function Home() {
             <a href="tel:+390282370121">+39 0282370121</a>
           </div>
         </div>
+        <Footer />
       </section>
-      <Footer />
     </main>
   );
 }
