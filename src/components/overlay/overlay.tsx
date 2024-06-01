@@ -7,6 +7,7 @@ import Logo from "@/data/svgs/logo";
 
 export default function Overlay() {
   const [color, setColor] = React.useState("");
+  const location = React.useRef("");
 
   React.useEffect(() => {
     const main = document.querySelector("main");
@@ -42,6 +43,10 @@ export default function Overlay() {
     setColor(isYellowBg ? blue : yellow);
   }, []);
 
+  React.useLayoutEffect(() => {
+    location.current = window.location.pathname;
+  }, []);
+
   return (
     <div className={styles.container}>
       <div style={{ placeSelf: "start start" }}>
@@ -51,13 +56,23 @@ export default function Overlay() {
       </div>
 
       <div style={{ placeSelf: "start end" }}>
-        <Link
-          href={"/about-us"}
-          className={`${styles.catcher}`}
-          style={{ color: color }}
-        >
-          About Us
-        </Link>
+        {location.current == "/" ? (
+          <Link
+            href={"/about-us"}
+            className={`${styles.catcher}`}
+            style={{ color: color }}
+          >
+            About Us
+          </Link>
+        ) : (
+          <Link
+            href={"/"}
+            className={`${styles.catcher}`}
+            style={{ color: color }}
+          >
+            Home
+          </Link>
+        )}
       </div>
 
       <div style={{ placeSelf: "end start" }}>

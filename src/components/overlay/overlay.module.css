@@ -24,3 +24,9 @@
 .catcher {
     pointer-events: auto;
 }
+
+@media (max-width: 780px) {
+    .container {
+        position: absolute;
+    }
+}

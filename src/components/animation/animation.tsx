@@ -5,6 +5,8 @@ import bg from "./fart-bg.svg";
 import React from "react";
 import { emitter } from "@/emitter/emitter";
 
+let triggered = false;
+
 export default function Animation() {
   const [done, setDone] = React.useState(false);
   const bgr = React.useRef(null!);
@@ -30,12 +32,13 @@ export default function Animation() {
       );
 
       setDone(true);
+      triggered = true;
     }
 
     emitter.on("startAnimation", start);
   }, []);
 
-  return done ? null : (
+  return done || triggered ? null : (
     <motion.div
       ref={bgr}
       initial={{
