@@ -3,6 +3,7 @@
 import { motion, useAnimate } from "framer-motion";
 import bg from "./fart-bg.svg";
 import React from "react";
+import { emitter } from "@/emitter/emitter";
 
 export default function Animation() {
   const [done, setDone] = React.useState(false);
@@ -12,7 +13,6 @@ export default function Animation() {
 
   React.useEffect(() => {
     async function start() {
-      console.log("animation started");
       await animate(
         textr.current,
         {
@@ -32,7 +32,7 @@ export default function Animation() {
       setDone(true);
     }
 
-    setTimeout(start, 1000);
+    emitter.on("startAnimation", start);
   }, []);
 
   return done ? null : (

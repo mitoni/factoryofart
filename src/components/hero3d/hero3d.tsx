@@ -16,6 +16,7 @@ import { damp3 } from "maath/easing";
 import { remap } from "maath/misc";
 
 import projects, { TProject } from "@/data/projects";
+import { emitter } from "@/emitter/emitter";
 
 const SPACE = 5;
 const BASE_FONT_SIZE = 1;
@@ -270,7 +271,7 @@ export default function Hero3D() {
             position={[0, 0, SPACE * 5]}
           />
           {/*<CameraControls />*/}
-          <Suspense fallback={null}>
+          <Suspense fallback={<Fallback />}>
             <Images ref={imgs} />
           </Suspense>
         </Canvas>
@@ -280,4 +281,14 @@ export default function Hero3D() {
       </div>
     </div>
   );
+}
+
+function Fallback() {
+  React.useEffect(() => {
+    return () => {
+      emitter.emit("startAnimation");
+    };
+  }, []);
+
+  return null;
 }
