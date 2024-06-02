@@ -9,6 +9,10 @@
     --max-width: 1280px;
 }
 
+::selection {
+    background-color: white;
+}
+
 #root {
     width: 100%;
     height: 100%;
