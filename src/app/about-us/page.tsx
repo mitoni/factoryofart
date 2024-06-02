@@ -243,7 +243,7 @@ export default function Page() {
       <Footer
         right={
           <div style={{ textAlign: "right" }}>
-            <a href="mailto:">Contact Us</a>
+            <a href="mailto:info@factoryof.art">Contact Us</a>
           </div>
         }
       />
