@@ -30,9 +30,24 @@ export default async function Home() {
 
           <div className={styles.t3}>
             Social
-            <a>Instagram</a>
-            <a>LinkedIn</a>
-            <a>Facebook</a>
+            <a
+              href="https://www.instagram.com/factoryofart.milan/"
+              target="_blank"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.linkedin.com/company/factory-of-art/"
+              target="_blank"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61552556864851"
+              target="_blank"
+            >
+              Facebook
+            </a>
           </div>
 
           <div className={styles.t4}>
