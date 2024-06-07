@@ -65,7 +65,7 @@ export default function Page() {
           </p>
         </div>
 
-        <div className={styles.center} style={{ textAlign: "center" }}>
+        <div className={styles.center} style={{ textAlign: "right" }}>
           <h3>
             DESIGNING FOR BEAUTY
             <br /> ARTING FOR LOVE
@@ -85,6 +85,13 @@ export default function Page() {
           </p>
         </div>
 
+        <div className={styles.center} style={{ textAlign: "left" }}>
+          <h3>
+            THE FACTORY
+            <br /> AN ANDY WARHOL TRIBUTE
+          </h3>
+        </div>
+
         <div
           className={styles.left}
           style={{ display: "flex", alignItems: "flex-end" }}
@@ -98,12 +105,7 @@ export default function Page() {
           contemporary technological mediums.
         </div>
 
-        <div className={styles.right} style={{ gap: "1rem" }}>
-          <h3>
-            THE FACTORY
-            <br /> AN ANDY WARHOL TRIBUTE
-          </h3>
-
+        <div className={styles.right}>
           <Image
             src={"/fart.svg"}
             width={0}
@@ -136,10 +138,7 @@ export default function Page() {
           </p>
         </div>
 
-        <div
-          className={styles.right}
-          style={{ display: "flex", alignItems: "center" }}
-        >
+        <div className={styles.right}>
           <h3>MORE THAN CREATIVE</h3>
         </div>
 
