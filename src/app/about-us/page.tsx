@@ -2,6 +2,7 @@ import Footer from "@/components/footer/footer";
 import styles from "./page.module.css";
 import Image from "next/image";
 import Overlay from "@/components/overlay/overlay";
+import Pictos from "@/components/pictos/pictos";
 
 export default function Page() {
   return (
@@ -19,6 +20,7 @@ export default function Page() {
               src={"/monica-silva-portrait.jpg"}
               alt="monica silva portrait"
               style={{ objectFit: "cover", objectPosition: "center center" }}
+              loading="eager"
             ></Image>
           </div>
           <div style={{ gridColumn: "2 / span 1", gridRow: "1 / -1" }} />
@@ -33,6 +35,7 @@ export default function Page() {
               src={"/valerio-fausti-portrait.jpg"}
               alt="monica silva portrait"
               style={{ objectFit: "cover", objectPosition: "center center" }}
+              loading="eager"
             ></Image>
           </div>
           <div
@@ -42,7 +45,12 @@ export default function Page() {
               position: "relative",
             }}
           >
-            <Image fill src={"/description.svg"} alt="description"></Image>
+            <Image
+              fill
+              src={"/description.svg"}
+              alt="description"
+              loading="eager"
+            ></Image>
           </div>
         </div>
 
@@ -120,13 +128,7 @@ export default function Page() {
         </div>
 
         <div className={styles.center} style={{ textAlign: "center" }}>
-          <Image
-            src={"/picto.svg"}
-            width={0}
-            height={0}
-            style={{ width: "100%", height: "auto" }}
-            alt="fart pictogram"
-          ></Image>
+          <Pictos />
         </div>
 
         <div className={styles.left}>
@@ -138,7 +140,7 @@ export default function Page() {
           </p>
         </div>
 
-        <div className={styles.right}>
+        <div className={styles.right} style={{ textAlign: "right" }}>
           <h3>MORE THAN CREATIVE</h3>
         </div>
 
