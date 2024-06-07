@@ -14,7 +14,7 @@ export default function Pictos() {
           initial={{ opacity: 1, rotateZ: i * -90 }}
           whileInView={{ opacity: 1, rotateZ: 0 }}
           transition={{ duration: i * 0.5, delay: i * 0.5, ease: "backOut" }}
-          viewport={{ once: true, margin: "-200px" }}
+          viewport={{ once: true, margin: "-10%" }}
         >
           <Image
             fill
