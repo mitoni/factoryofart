@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import Overlay from "@/components/overlay/overlay";
 import Pictos from "@/components/pictos/pictos";
+import { motion } from "framer-motion";
 
 export default function Page() {
   return (
@@ -127,22 +128,7 @@ export default function Page() {
           <h3>A PICTOGRAM DESIGNED TO EMBODY AN ENTIRE CREATIVE PROCESS</h3>
         </div>
 
-        <div className={styles.center} style={{ textAlign: "center" }}>
-          <Pictos />
-        </div>
-
-        <div className={styles.left}>
-          <p>
-            Our pictogram represents the synthesis of our creative process. From
-            the curious, attentive and profound observation of things to the
-            creation of new worlds, passing through the stages of research and
-            the overturning of reality, the change of point of view.
-          </p>
-        </div>
-
-        <div className={styles.right} style={{ textAlign: "right" }}>
-          <h3>MORE THAN CREATIVE</h3>
-        </div>
+        <Pictos />
 
         <div className={styles.center}>
           <h2>OUR SHAPES</h2>
