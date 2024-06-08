@@ -33,7 +33,7 @@ function _CirclePointer() {
       }
     }
     // detect mobile
-    if (window.innerWidth < 780) return;
+    if (window.innerWidth < 768) return;
 
     window.addEventListener("mousemove", handlePointerMove);
     return () => {
@@ -50,7 +50,7 @@ function _CirclePointer() {
       window.removeEventListener("mousemove", handlePointerMove);
     }
     // detect mobile
-    if (window.innerWidth < 780) return;
+    if (window.innerWidth < 768) return;
 
     window.addEventListener("mousemove", handlePointerMove);
   }, []);

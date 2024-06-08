@@ -30,7 +30,7 @@
     grid-column: 2 / span 1;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 768px) {
     .picContainer {
         grid-template-columns: repeat(2, 1fr);
         height: 400px;
