@@ -20,7 +20,7 @@ const BASE_FONT_SIZE = 1;
 const font = "/fonts/aga.woff";
 const TEXT_COLOR = "white";
 
-const Image = React.forwardRef(function Image(
+const Image3D = React.forwardRef(function Image(
   props: React.ComponentProps<typeof _Image> & { ["data-key"]: number } & {
     project: TProject;
     onImageChange(i: number): void;
@@ -49,12 +49,12 @@ const Image = React.forwardRef(function Image(
     damp3(
       iref.current.scale,
       n == dataKey ? [sx * sMult, sy * sMult, 1] : [sx, sy, 1],
-      0.25,
+      0.05,
       delta
     );
   });
 
-  return <_Image ref={iref} {...args} />;
+  return <_Image ref={iref} scale={scale} {...args} />;
 });
 
 function Images() {
@@ -100,7 +100,7 @@ function Images() {
           position.setX(i * vw);
 
           return (
-            <Image
+            <Image3D
               key={i}
               data-key={i}
               position={position}
