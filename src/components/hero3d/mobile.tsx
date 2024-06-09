@@ -141,7 +141,7 @@ export default function Mobile() {
 
       <Canvas gl={{ antialias: false }}>
         <Suspense fallback={<Fallback />}>
-          <ScrollControls horizontal pages={projects.length + 1}>
+          <ScrollControls horizontal pages={projects.length + 1} damping={0}>
             <Images />
           </ScrollControls>
         </Suspense>
