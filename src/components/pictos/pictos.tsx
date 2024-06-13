@@ -42,7 +42,7 @@ export default function Pictos() {
         className={styles.left}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 2.25 }}
+        transition={{ duration: 0.5, delay: 2 }}
         viewport={{ once: true, margin: "-10%" }}
       >
         <p>
