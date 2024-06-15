@@ -4,7 +4,7 @@ import React from "react";
 import bg from "./fart-bg.svg";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Image as _Image, Text, PerspectiveCamera } from "@react-three/drei";
-import { ComponentProps, Suspense } from "react";
+import { Suspense } from "react";
 import { Group, Vector3 } from "three";
 import { clamp } from "three/src/math/MathUtils.js";
 import { damp3 } from "maath/easing";
@@ -19,7 +19,7 @@ const FONT = "/fonts/aga.woff";
 const TEXT_COLOR = "white";
 
 const Image3D = React.forwardRef(function Image(
-  props: ComponentProps<typeof _Image> & { ["data-key"]: number } & {
+  props: React.ComponentProps<typeof _Image> & { ["data-key"]: number } & {
     project: TProject;
   },
   _: any
@@ -146,6 +146,8 @@ const Images = React.forwardRef(function Images(
   const triggered = React.useRef(false);
   const ratio = window.innerHeight / window.innerWidth;
 
+  const group = React.useRef<Group>(null!);
+
   React.useImperativeHandle(ref, () => {
     return {
       move(p: number) {
@@ -163,9 +165,6 @@ const Images = React.forwardRef(function Images(
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const group = React.useRef<Group>(null!);
-  const img = React.useRef<any>(null);
 
   useFrame((_, delta) => {
     const target = triggered.current
@@ -190,15 +189,14 @@ const Images = React.forwardRef(function Images(
       {projects?.map((project, i) => {
         const { width, height } = project.image;
         const p = i % 4;
-        const position = pts[p].clone();
 
+        const position = pts[p].clone();
         position.setZ(-i * SPACE);
 
         return (
           <Image3D
             key={i}
             data-key={i}
-            ref={img}
             scale={[(1 / height) * 5000, (1 / width) * 5000]}
             position={position}
             url={project.image.src}

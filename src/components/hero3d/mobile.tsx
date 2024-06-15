@@ -1,151 +1,185 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import bg from "./fart-bg.svg";
-import { emitter } from "@/emitter/emitter";
 import React, { Suspense } from "react";
-import {
-  Image as _Image,
-  Scroll,
-  ScrollControls,
-  useScroll,
-  Text,
-} from "@react-three/drei";
+import bg from "./fart-bg.svg";
+import { clamp } from "three/src/math/MathUtils.js";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Image as _Image, Text, PerspectiveCamera } from "@react-three/drei";
+import { emitter } from "@/emitter/emitter";
 import projects, { TProject } from "@/data/projects";
 import { Group, Vector3 } from "three";
-import { damp, damp3 } from "maath/easing";
+import { damp3 } from "maath/easing";
 
-const IMG_SCALE = 2000;
-const BASE_FONT_SIZE = 1;
-const font = "/fonts/aga.woff";
+const BASE_FONT_SIZE = 0.15;
+const FONT = "/fonts/aga.woff";
 const TEXT_COLOR = "white";
+const DZ = 3;
+const DY = 2;
 
 const Image3D = React.forwardRef(function Image(
-  props: React.ComponentProps<typeof _Image> & { ["data-key"]: number } & {
+  props: React.ComponentProps<typeof _Image> & {
+    ["data-key"]: number;
+  } & {
     project: TProject;
-    onImageChange(i: number): void;
   },
   _: any
 ) {
-  const { "data-key": dataKey, scale, project, onImageChange, ...args } = props;
-  const iref = React.useRef<any>(null!);
-  const curr = React.useRef<number>(0);
-  const scroll = useScroll();
-  const { width: vw } = useThree((state) => state.viewport);
+  const { position, "data-key": dataKey, scale, project, ...args } = props;
 
-  const sx = Array.isArray(scale) ? scale?.[0] ?? 1 : 1;
+  const iref = React.useRef<any>(null!);
+  const title = React.useRef<any>(null!);
+  const text = React.useRef<Group>(null!);
+  const description = React.useRef<any>(null!);
+
+  const three = useThree();
+
+  const anchorX = "center";
+  const textAlign = "center";
+
+  // const sx = Array.isArray(scale) ? scale?.[0] ?? 1 : 1;
   const sy = Array.isArray(scale) ? scale?.[1] ?? 1 : 1;
-  const sMult = 2.5;
-  const comp = 1 / vw / projects.length;
 
   useFrame((_, delta) => {
-    const n = Math.floor((scroll.offset + comp) * projects.length);
+    let dist = new Vector3();
+    text.current.getWorldPosition(dist);
 
-    if (n != curr.current) {
-      curr.current = n;
-      onImageChange(n);
-    }
+    const scale = clamp(dist.z + 2, 0, 1);
 
-    damp3(
-      iref.current.scale,
-      n == dataKey ? [sx * sMult, sy * sMult, 1] : [sx, sy, 1],
-      0.05,
-      delta
-    );
+    damp3(title.current.scale, [scale, scale, scale], 0.15, delta);
+    damp3(description.current.scale, [scale, scale, scale], 0.15, delta);
   });
 
-  return <_Image ref={iref} scale={scale} {...args} />;
+  return (
+    <group position={position}>
+      <_Image ref={iref} scale={scale} {...args}></_Image>
+      <group ref={text} position={[0, sy, 0]}>
+        <Text
+          anchorX={anchorX}
+          anchorY={"bottom"}
+          textAlign={textAlign}
+          ref={title}
+          font={FONT}
+          fontSize={BASE_FONT_SIZE * 0.5}
+          fillOpacity={1}
+        >
+          {project.title}
+          <meshBasicMaterial toneMapped={false} color={TEXT_COLOR} />
+        </Text>
+        <Text
+          anchorX={anchorX}
+          anchorY={"top"}
+          textAlign={textAlign}
+          ref={description}
+          font={FONT}
+          fontSize={BASE_FONT_SIZE * 0.25}
+          color={TEXT_COLOR}
+          fillOpacity={1}
+        >
+          {project.description}
+          <meshBasicMaterial toneMapped={false} color={TEXT_COLOR} />
+        </Text>
+      </group>
+    </group>
+  );
 });
 
-function Images() {
-  const { width: vw, height: vh } = useThree((state) => state.viewport);
-  const tref = React.useRef<Group>(null!);
-  const curr = React.useRef<number>(0);
+const Images = React.forwardRef(function Images(
+  _,
+  ref: React.ForwardedRef<any>
+) {
+  const scrolled = React.useRef(0);
+  const group = React.useRef<Group>(null!);
 
-  function onImageChange(i: number) {
-    if (i == curr.current) return;
-    curr.current = i;
-  }
+  React.useImperativeHandle(ref, () => {
+    return {
+      move(p: number) {
+        scrolled.current = p;
+      },
+    };
+  });
 
   useFrame((_, delta) => {
-    tref.current.children.forEach((child, i) => {
-      damp(child, "fillOpacity", curr.current == i ? 1 : 0, 0.25, delta);
-    });
+    const target = new Vector3(
+      0,
+      scrolled.current * projects?.length * DY,
+      scrolled.current * projects.length * DZ
+    );
+    damp3(group.current.position, target, 0, delta);
   });
 
   return (
-    <>
-      <group ref={tref}>
-        {projects.map((project, i) => {
-          return (
-            <Text
-              key={i}
-              renderOrder={-1}
-              font={font}
-              fontSize={BASE_FONT_SIZE * 0.3}
-              position={[0, vh * 0.25, 0]}
-              fillOpacity={0}
-            >
-              {project.title}
-              <meshBasicMaterial toneMapped={false} color={TEXT_COLOR} />
-            </Text>
-          );
-        })}
-      </group>
+    <group ref={group}>
+      {projects?.map((project, i) => {
+        const { width, height } = project.image;
+        const position = new Vector3(0, -DY * i, -DZ * i);
 
-      <Scroll>
-        {projects.map((project, i) => {
-          const { width, height } = project.image;
-          const position = new Vector3();
-          position.setX(i * vw);
-
-          return (
-            <Image3D
-              key={i}
-              data-key={i}
-              position={position}
-              url={project.image.src}
-              scale={[(1 / height) * IMG_SCALE, (1 / width) * IMG_SCALE]}
-              project={project}
-              onImageChange={onImageChange}
-            />
-          );
-        })}
-      </Scroll>
-    </>
+        return (
+          <Image3D
+            key={i}
+            data-key={i}
+            scale={[(1 / height) * 1000, (1 / width) * 1000]}
+            position={position}
+            url={project.image.src}
+            project={project}
+          />
+        );
+      })}
+    </group>
   );
-}
+});
 
 export default function Mobile() {
-  return (
-    <div style={{ height: "100vh" }}>
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-        }}
-      >
-        <img
-          src={bg.src}
-          alt="fart logo"
-          style={{
-            width: "100%",
-            position: "absolute",
-            bottom: 0,
-            padding: "0 min(5%, 50px)",
-            boxSizing: "border-box",
-            transform: "translateY(11%)",
-          }}
-        />
-      </div>
+  const ref = React.useRef<HTMLDivElement>(null);
+  const imgs = React.useRef<any>(null);
 
-      <Canvas gl={{ antialias: false }}>
-        <Suspense fallback={<Fallback />}>
-          <ScrollControls horizontal pages={projects.length + 1} damping={0}>
-            <Images />
-          </ScrollControls>
-        </Suspense>
-      </Canvas>
+  React.useEffect(() => {
+    function handleScroll() {
+      const rh = ref.current!.parentElement!.offsetHeight;
+      const { top: ot } = ref.current!.parentElement!.getBoundingClientRect();
+      const clamped = clamp(-ot / (rh - window.innerHeight), 0, Infinity);
+
+      imgs.current?.move(clamped);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <div id="hero3d" style={{ height: "500vh" }}>
+      <div ref={ref} style={{ height: "100vh", position: "sticky", top: 0 }}>
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+          }}
+        >
+          <img
+            src={bg.src}
+            alt="fart logo"
+            style={{
+              width: "100%",
+              position: "absolute",
+              bottom: 0,
+              padding: "0 min(5%, 50px)",
+              boxSizing: "border-box",
+              transform: "translateY(11%)",
+            }}
+          />
+        </div>
+        <Canvas gl={{ antialias: false }}>
+          <PerspectiveCamera
+            makeDefault
+            fov={35}
+            position={[0, DY / 3, DZ * 1.5]}
+          />
+          <Suspense fallback={<Fallback />}>
+            <Images ref={imgs} />
+          </Suspense>
+        </Canvas>
+      </div>
     </div>
   );
 }
