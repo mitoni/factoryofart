@@ -16,6 +16,10 @@ export default function Pictos() {
             whileInView={{ opacity: 1, rotateZ: 0 }}
             transition={{ duration: i * 0.5, delay: i * 0.5, ease: "backOut" }}
             viewport={{ once: true, margin: "-10%" }}
+            whileHover={{
+              rotateZ: 360,
+              transition: { delay: 0, duration: 1.5, ease: "backOut" },
+            }}
           >
             <Image
               fill
@@ -27,6 +31,21 @@ export default function Pictos() {
         ))}
       </div>
 
+      <motion.div
+        className={styles.left}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 2.25 }}
+        viewport={{ once: true, margin: "-10%" }}
+      >
+        <p>
+          Our pictogram represents the synthesis of our creative process. From
+          the curious, attentive and profound observation of things to the
+          creation of new worlds, passing through the stages of research and the
+          overturning of reality, the change of point of view.
+        </p>
+      </motion.div>
+
       <motion.div className={styles.right} style={{ textAlign: "right" }}>
         <motion.h3
           initial={{ opacity: 0 }}
@@ -36,21 +55,6 @@ export default function Pictos() {
         >
           MORE THAN CREATIVE
         </motion.h3>
-      </motion.div>
-
-      <motion.div
-        className={styles.left}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 2 }}
-        viewport={{ once: true, margin: "-10%" }}
-      >
-        <p>
-          Our pictogram represents the synthesis of our creative process. From
-          the curious, attentive and profound observation of things to the
-          creation of new worlds, passing through the stages of research and the
-          overturning of reality, the change of point of view.
-        </p>
       </motion.div>
     </div>
   );
