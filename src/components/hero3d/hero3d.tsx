@@ -6,8 +6,5 @@ import Mobile from "./mobile";
 
 export default function Hero3D() {
   const isMobile = useMobile();
-
-  console.log({ isMobile });
-
   return isMobile ? <Mobile /> : <Desktop />;
 }
