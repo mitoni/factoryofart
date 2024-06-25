@@ -58,8 +58,8 @@ export default function Mobile() {
               key={project.image.src}
               style={{
                 width: "100vw",
-                height: "100vh",
-                padding: "3rem",
+                height: "70%",
+                padding: "10rem 1rem 0",
                 boxSizing: "border-box",
               }}
             >
@@ -87,16 +87,16 @@ export default function Mobile() {
         style={{
           position: "sticky",
           top: "100%",
-          height: "10vh",
+          width: "100%",
+          height: "30%",
+          boxSizing: "border-box",
           left: 0,
           right: 0,
-          width: "100vw",
-          minHeight: "4rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
-          padding: "1rem 0",
+          padding: "1rem",
           textAlign: "center",
         }}
       >
