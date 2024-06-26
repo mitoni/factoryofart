@@ -42,6 +42,10 @@ export default function Mobile() {
         overflowX: "scroll",
       }}
       onScroll={handleScroll}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
     >
       <div
         style={{
@@ -76,6 +80,7 @@ export default function Mobile() {
                   style={{ objectFit: "contain" }}
                   src={project.image.src}
                   alt={project.title}
+                  sizes="100vw"
                 />
               </div>
             </div>
